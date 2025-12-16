@@ -8,5 +8,6 @@
 #include "system/diagnostics/diagnosticsEEPROM.h"
 #include "system/config/config.h"                          // System configuration parameters
 #include "system/pinout/pinout.h"                          // Pinout definitions
+#include "module_ledControl/led.h"                        // LED control module
 
 #endif  // MAIN_H
