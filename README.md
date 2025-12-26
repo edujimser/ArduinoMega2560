@@ -23,6 +23,7 @@ Instead of starting from scratch, you can clone this repository and immediately 
   - [Installation](#installation)
 - [Project Structure](#project-structure)
 - [Usage](#usage)
+- [Debug](#Debug)
 - [Functions](#functions)
 - [Arduino Mega 2560 Pinout](#arduino-mega-2560-pinout)
 - [PlatformIO Configuration](#platformio-configuration)
@@ -104,6 +105,52 @@ void loop() {
   delay(1000);
 }
 ```
+
+## Debug
+Este proyecto incorpora un sistema de depuración para el Arduino Mega 2560 utilizando **avr-stub**, **GDB** y un adaptador **FT232BL**, permitiendo depurar el firmware de forma profesional en un microcontrolador que no soporta debugging por hardware.
+
+### Requisitos
+
+Para habilitar el modo debug necesitas:
+
+- Arduino **Mega 2560**
+- Adaptador USB–Serial **FT232BL**
+- **PlatformIO** (VSCode)
+- Librería `avr-stub` incluida en el proyecto
+- Cableado básico entre el FT232BL y el Mega
+
+
+### Conexión del FT232BL
+
+Conecta el FT232BL al Mega 2560 de la siguiente forma:
+
+| FT232BL | Mega 2560 |
+|---------|-----------|
+| TXD     | RX0 (0)   |
+| RXD     | TX0 (1)   |
+| GND     | GND       |
+
+> El FT232BL será el puerto utilizado por GDB para comunicarse con el microcontrolador.
+
+
+### Configuración en PlatformIO
+
+El entorno de depuración ya está configurado en `platformio.ini`.  
+Ejemplo:
+
+```ini
+[env:debug]
+build_type = debug
+debug_tool = custom
+debug_port = /dev/ttyUSB0
+
+build_flags =
+    -DDEBUG_MODE
+    -Og
+    -g
+
+lib_deps =
+    jdolinay/avr-debugger
 
 ## Functions
 
